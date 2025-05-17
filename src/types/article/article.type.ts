@@ -1,5 +1,6 @@
 export type TArticle = {
+    maPhim : number,
     tenPhim : string,
     hinhAnh : string,
-    moTa : string,
+    trailerPhim : string,
 }
