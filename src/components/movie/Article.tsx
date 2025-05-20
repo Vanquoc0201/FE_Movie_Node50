@@ -1,24 +1,15 @@
 'use client';
 
 import { TArticle } from '@/types/article/article.type';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type TArticleProps = {
   movie: TArticle;
 };
 
 export default function Article({ movie }: TArticleProps) {
-  const router = useRouter();
-
-  const handleBuyTicket = () => {
-    alert('Mua vé hiện chưa được hỗ trợ');
-  };
-
-  const handleViewDetail = () => {
-    router.push(`/Detail/${movie.maPhim}`);
-  };
-
   return (
     <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
       <img
@@ -32,18 +23,22 @@ export default function Article({ movie }: TArticleProps) {
           {movie.tenPhim}
         </h2>
         <div className="flex space-x-3">
-          <button
-            onClick={handleViewDetail}
+          <Link
+            href={`/Detail/${movie.maPhim}`}
             className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
           >
             Xem chi tiết
-          </button>
-          <button
-            onClick={handleBuyTicket}
+          </Link>
+          <Link
+            href = {`/booking/${movie.maPhim}`}
+            onClick={(e) => {
+              e.preventDefault();
+              alert('Mua vé hiện chưa được hỗ trợ');
+            }}
             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500 transition"
           >
             Mua vé
-          </button>
+          </Link>
         </div>
       </div>
     </div>

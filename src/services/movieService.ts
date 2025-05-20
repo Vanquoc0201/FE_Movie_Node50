@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, DOMAIN, GETDETAILMOVIE, GETLISTBANNER, GETMOVIE, MODULEMOVIE } from "@/constant/app.constant";
+import { DOMAIN, GETDETAILMOVIE, GETLISTBANNER, GETMOVIE, MODULEMOVIE } from "@/constant/app.constant";
 import axiosClient from "./axiosClient";
 export const movieService = {
     async getAllMovie(){
