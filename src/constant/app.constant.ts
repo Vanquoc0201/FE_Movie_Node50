@@ -11,3 +11,7 @@ export const REGISTER = process.env.NEXT_PUBLIC_REGISTER
 export const LOGIN = process.env.NEXT_PUBLIC_LOGIN
 export const GETALLUSER = process.env.NEXT_PUBLIC_GETALLUSER
 export const ADDUSER = process.env.NEXT_PUBLIC_ADDUSER
+export const DELETEUSER = process.env.NEXT_PUBLIC_DELETEUSER
+export const UPDATEUSER = process.env.NEXT_PUBLIC_UPDATEUSER
+export const SEARCHUSER = process.env.NEXT_PUBLIC_SEARCHUSER
+

@@ -1,5 +1,4 @@
 'use client';
-import "tailwindcss";
 import { useAddUser } from '@/hooks/user/useAddUsers';
 import { TAddUser } from '@/types/user/addUser.type';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -32,6 +31,14 @@ export const AddUserModal = ({ open, onClose }: Props) => {
     formState: { errors },
   } = useForm<TAddUser>({
     resolver: zodResolver(addUserSchema),
+    defaultValues: {
+    taiKhoan: '',
+    matKhau: '',
+    hoTen: '',
+    email: '',
+    soDt: '',
+    loaiNguoiDung: 'KhachHang', // ⚠️ Quan trọng
+  },
   });
 
   const onSubmit = (data: TAddUser) => {
@@ -52,14 +59,14 @@ export const AddUserModal = ({ open, onClose }: Props) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 border border-red-500">
         <h2 className="text-xl font-semibold mb-4">Thêm người dùng</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <input
               placeholder="Tài khoản"
               {...register('taiKhoan')}
-              className="w-full border px-3 py-2 rounded-md"
+              className="w-full border border-red-500 px-3 py-2 rounded-md"
             />
             {errors.taiKhoan && <p className="text-red-500 text-sm">{errors.taiKhoan.message}</p>}
           </div>
@@ -106,11 +113,7 @@ export const AddUserModal = ({ open, onClose }: Props) => {
               control={control}
               name="loaiNguoiDung"
               render={({ field }) => (
-                <select
-                  {...field}
-                  className="w-full border px-3 py-2 rounded-md"
-                  defaultValue=""
-                >
+                <select {...field} className="w-full border px-3 py-2 rounded-md">
                   <option value="" disabled>
                     Chọn loại người dùng
                   </option>

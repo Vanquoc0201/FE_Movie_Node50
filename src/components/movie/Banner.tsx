@@ -12,7 +12,7 @@ export default function Banner() {
   const { data: banner, isLoading } = useBanners();
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto mb-8">
+    <div className="w-full mb-8">
       {isLoading || !banner ? (
         <p className="text-white text-center">Đang tải banner...</p>
       ) : (
@@ -24,14 +24,14 @@ export default function Banner() {
           loop={true}
           spaceBetween={20}
           slidesPerView={1}
-          className="rounded-xl shadow-xl"
+          className=" shadow-xl"
         >
           {banner.map((item : TBanner) => (
             <SwiperSlide key={item.maBanner}>
               <img
                 src={item.hinhAnh}
                 alt={`Banner ${item.maPhim}`}
-                className="w-full h-[500px] object-cover rounded-xl"
+                className="w-full h-[400px] object-cover"
               />
             </SwiperSlide>
           ))}

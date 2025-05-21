@@ -1,10 +1,18 @@
 import { TUser } from '@/types/user/user.type';
 import React from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useDeleteUser } from '@/hooks/user/useDeleteUsers';
 type TableProps = {
   data: TUser[];
 };
 export default function Table({ data }: TableProps) {
+  const { mutate: deleteUser, isPending } = useDeleteUser();
+
+  const handleDelete = (taiKhoan: string) => {
+    if (window.confirm(`Bạn có chắc muốn xóa tài khoản "${taiKhoan}" không?`)) {
+      deleteUser(taiKhoan);
+    }
+  };
   return (
     <div className="overflow-x-auto bg-white shadow-lg rounded-2xl p-6">
       <table className="min-w-full table-auto border border-gray-200 rounded-xl overflow-hidden">
@@ -44,7 +52,7 @@ export default function Table({ data }: TableProps) {
                     <Pencil size={18} />
                   </button>
                   <button
-                    onClick={() => console.log('Delete', user.userId)}
+                    onClick={() => handleDelete(user.taiKhoan)}
                     className="text-red-600 hover:bg-red-100 p-2 rounded-full transition-all"
                   >
                     <Trash2 size={18} />

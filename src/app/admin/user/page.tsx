@@ -25,13 +25,16 @@ export default function UserPage() {
 
   return (
     <div className="p-6 bg-zinc-900 min-h-screen text-white">
-      <h1 className="text-3xl font-bold mb-6 text-[#e11d48]">
-        Danh sách người dùng
-      </h1>
+      {/* Header gồm tiêu đề + nút thêm */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-[#e11d48]">
+          Danh sách người dùng
+        </h1>
 
-      {/* Nút thêm người dùng */}
-      <div className="flex justify-end mb-4">
-        <Button onClick={() => setOpenModal(true)} className="bg-pink-600 hover:bg-pink-700 px-6 py-3 text-base font-semibold">
+        <Button
+          onClick={() => setOpenModal(true)}
+          className="bg-pink-600 hover:bg-pink-700 px-6 py-3 text-base font-semibold"
+        >
           Thêm Người Dùng
         </Button>
       </div>

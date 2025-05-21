@@ -6,10 +6,22 @@ export default function Navbar() {
     <header className="bg-black text-white shadow-md">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-2xl font-bold text-red-500">
-          <Link href="/">MovieZone</Link>
-        </div>
+        <div className="flex items-center space-x-3">
+          {/* Logo hình ảnh */}
+          <img
+            src="/images/logo.jpg" 
+            alt="MovieZone Logo"
+            className="h-20 w-auto object-contain drop-shadow-lg"
+          />
 
+          {/* Tên thương hiệu */}
+          <Link
+            href="/"
+            className="text-2xl font-extrabold text-red-500 tracking-wide hover:text-red-400 transition duration-300"
+          >
+            MovieZone
+          </Link>
+        </div>
         {/* Menu */}
         <nav className="flex-1 flex justify-center space-x-6 text-sm sm:text-base uppercase tracking-wide">
           <Link href="/" className="hover:text-red-500 transition">Trang chủ</Link>

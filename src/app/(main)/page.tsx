@@ -8,16 +8,17 @@ export default function Home() {
   if (isLoading) return <div>Đang tải phim...</div>;
   if (isError) return <div>Lỗi: {(error as Error).message}</div>;
   return (
-    <div className="p-4">
-      <div className="mb-8">
-        <Banner />
+    <>
+      <Banner />
+      <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Danh sách phim</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {movies.map((movie: TArticle, index: number) => (
+            <Article key={index} movie={movie} />
+          ))}
+        </div>
       </div>
-      <h1 className="text-2xl font-bold mb-4">Danh sách phim</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {movies.map((movie : TArticle, index : number) => (
-          <Article key={index} movie={movie} />
-        ))}
-      </div>
-    </div>
+    </>
   );
+
 }
