@@ -2,12 +2,11 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from '@/services/userService';
-import { TAddUser } from '@/types/user/addUser.type';
 import { toast } from 'react-toastify';
+import { TAddUser } from '@/types/user/add-user.type';
 
 export const useAddUser = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: TAddUser) => userService.addUser(data),
     onSuccess: () => {

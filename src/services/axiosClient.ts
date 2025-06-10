@@ -15,11 +15,8 @@ axiosClient.interceptors.request.use(
     let token: string | null = null;
 
     if (typeof window !== 'undefined') {
-      // Ưu tiên lấy token từ localStorage nếu đã đăng nhập
       token = localStorage.getItem('AccessToken');
     }
-
-    // Nếu không có trong localStorage (chưa đăng nhập), fallback về env
     if (!token && ACCESS_TOKEN) {
       token = ACCESS_TOKEN;
     }

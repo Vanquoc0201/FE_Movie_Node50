@@ -2,7 +2,6 @@
 
 import { TArticle } from '@/types/article/article.type';
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 type TArticleProps = {
@@ -24,7 +23,7 @@ export default function Article({ movie }: TArticleProps) {
         </h2>
         <div className="flex space-x-3">
           <Link
-            href={`/Detail/${movie.maPhim}`}
+            href={`/detail/${movie.maPhim}`}
             className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
           >
             Xem chi tiết

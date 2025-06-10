@@ -1,18 +1,18 @@
 'use client';
 import React from 'react';
-import { useBanners } from '@/hooks/movie/useBanners';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { TBanner } from '@/types/article/banner.type';
+import { useBanners } from '@/hooks/movie/useBanners';
 
 export default function Banner() {
   const { data: banner, isLoading } = useBanners();
 
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-8 mt-16">
       {isLoading || !banner ? (
         <p className="text-white text-center">Đang tải banner...</p>
       ) : (

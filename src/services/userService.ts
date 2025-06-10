@@ -1,6 +1,7 @@
 import { ADDUSER, DELETEUSER, DOMAIN, GETALLUSER, MODULEUSER, SEARCHUSER } from "@/constant/app.constant";
 import axiosClient from "./axiosClient"
-import { TAddUser } from "@/types/user/addUser.type";
+import { TAddUser } from "@/types/user/add-user.type";
+
 export const userService = {
     async getAllUser(){
         try {
@@ -37,7 +38,7 @@ export const userService = {
                     taiKhoan : taiKhoan
                 }
             });
-            return response.data;
+            return response.data.data.data;
         } catch (error) {
             console.log(error);
         }
