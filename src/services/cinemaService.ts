@@ -1,11 +1,24 @@
-import { DOMAIN, GETCINEMACLUSTER, GETCINEMASYSTEM, MODULECINEMA } from "@/constant/app.constant";
+import { ADDCINEMACLUSTER, ADDCINEMASYSTEM, DELETECINEMACLUSTER, DOMAIN, GETCINEMACLUSTER, GETCINEMASYSTEM, MODULECINEMA } from "@/constant/app.constant";
 import axiosClient from "./axiosClient";
+import { TCluster } from "@/types/cinema/cluster.type";
 export const cinemaService = {
     async getCinemaSystem(){
         try {
             const response = await axiosClient.get(`${DOMAIN}/${MODULECINEMA}/${GETCINEMASYSTEM}`)
             return response.data
         } catch (error){
+            console.log(error);
+        }
+    },
+    async addCinemaSystem(formData: FormData){
+        try {
+            const response = await axiosClient.post(`${DOMAIN}/${MODULECINEMA}/${ADDCINEMASYSTEM}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return response.data;
+        } catch (error) {
             console.log(error);
         }
     },
@@ -21,4 +34,24 @@ export const cinemaService = {
             console.log(error);
         }
     },
+    async addCinemaCluster(data : TCluster){
+        try {
+            const response = await axiosClient.post(`${DOMAIN}/${MODULECINEMA}/${ADDCINEMACLUSTER}`,data)
+            return response.data
+        } catch (error){
+            console.log(error);
+        }
+    },
+    async deleteCinemaCluster(maCumRap : number){
+        try {
+            const response = await axiosClient.delete(`${DOMAIN}/${MODULECINEMA}/${DELETECINEMACLUSTER}`, {
+                params: {
+                    maCumRap
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
