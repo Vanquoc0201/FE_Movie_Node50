@@ -1,4 +1,4 @@
-import { ADDCINEMACLUSTER, ADDCINEMASYSTEM, DELETECINEMACLUSTER, DOMAIN, GETCINEMACLUSTER, GETCINEMASYSTEM, MODULECINEMA } from "@/constant/app.constant";
+import { ADDCINEMACLUSTER, ADDCINEMASYSTEM, DELETECINEMACLUSTER, DOMAIN, GETCINEMACLUSTER, GETCINEMASYSTEM, GETSHOWTIMEBYMOVIE, MODULECINEMA } from "@/constant/app.constant";
 import axiosClient from "./axiosClient";
 import { TCluster } from "@/types/cinema/cluster.type";
 export const cinemaService = {
@@ -47,6 +47,18 @@ export const cinemaService = {
             const response = await axiosClient.delete(`${DOMAIN}/${MODULECINEMA}/${DELETECINEMACLUSTER}`, {
                 params: {
                     maCumRap
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async getShowtimeByMovie(maPhim : number){
+        try {
+            const response = await axiosClient.get(`${DOMAIN}/${MODULECINEMA}/${GETSHOWTIMEBYMOVIE}`, {
+                params: {
+                    maPhim
                 }
             });
             return response.data;
