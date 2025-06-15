@@ -53,7 +53,6 @@ export default function DetailPage() {
         <DetailMovie movie={data} />
       ) : (
         <>
-          {console.log("👉 Hiển thị lịch chiếu")}
           <ShowtimesByMovie maPhim={movieId} />
         </>
       )}

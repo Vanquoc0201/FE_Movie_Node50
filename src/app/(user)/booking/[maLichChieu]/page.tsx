@@ -4,13 +4,79 @@ import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import Seat from '@/components/booking/Seat';
 import { useGetListShowTimes } from '@/hooks/showtime/useGetListShowTimes';
+import { useUserInfo } from '@/hooks/auth/useGetUserInfo';
+import { useCreatePayment } from '@/hooks/booking/useCreatePayment';
 
 export default function BookingPage() {
   const { maLichChieu } = useParams();
   const maLC = parseInt(maLichChieu as string, 10);
   const { data, isLoading, isError } = useGetListShowTimes(maLC);
-
+  const { data: userInfo } = useUserInfo();
+  const { mutate: createPayment, isPending } = useCreatePayment();
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+  const handleBooking = () => {
+    if (!userInfo || !data) return;
+
+    const selectedSeatObjects = data.danhSachGhe.filter((g) =>
+      selectedSeats.includes(g.maGhe)
+    );
+
+    if (selectedSeatObjects.length === 0) return;
+
+    const seatPrice: number = data.giaVe ?? 0;
+    const totalPrice = seatPrice * selectedSeats.length;
+
+    const bookingPayload = {
+      maLichChieu: maLC,
+      danhSachVe: selectedSeatObjects.map((g) => ({
+        maGhe: g.maGhe,
+        giaVe: seatPrice,
+      })),
+      taiKhoanNguoiDung: userInfo.taiKhoan,
+      movieInfo: {
+        tenPhim: data.movie?.tenPhim ?? '',
+        hinhAnh: data.movie?.hinhAnh ?? '',
+        moTa: data.movie?.moTa ?? '',
+        ngayChieu: data.ngayGioChieu ?? '',
+      },
+      ghe: selectedSeatObjects,
+      tongTien: totalPrice,
+    };
+
+    // Lưu localStorage để lấy ra ở trang success
+    localStorage.setItem('BOOKING_SUCCESS', JSON.stringify(bookingPayload));
+
+    const payload = {
+      amount: totalPrice,
+      description: `Thanh toán vé xem phim`,
+      returnUrl: "http://localhost:3000/payment/success",
+      cancelUrl: "http://localhost:3000/payment/cancel",
+      buyerInfo: {
+        taiKhoan: userInfo.taiKhoan,
+        hoTen: userInfo.hoTen ?? '',
+        soDt: userInfo.soDt ?? '',
+      },
+      items: selectedSeatObjects.map((g) => ({
+        name: g.tenGhe,
+        quantity: 1,
+        price: seatPrice,
+      })),
+    };
+
+    createPayment(payload, {
+      onSuccess: (res) => {
+        const checkoutUrl = res?.data?.data?.checkoutUrl;
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        } else {
+          alert("Không lấy được link thanh toán");
+        }
+      },
+    });
+  };
+
+
+
 
   const toggleSeat = (maGhe: number) => {
     setSelectedSeats((prev) =>
@@ -94,17 +160,13 @@ export default function BookingPage() {
           <p className="font-bold text-lg mb-2">
             Tổng tiền: {totalPrice.toLocaleString('vi-VN')}đ
           </p>
-          <button
-            className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-            disabled={selectedSeats.length === 0}
-            onClick={() =>
-              alert(
-                `Bạn đã chọn: ${selectedSeats.join(', ')}\nTổng tiền: ${totalPrice.toLocaleString('vi-VN')}đ`
-              )
-            }
-          >
-            Đặt vé
-          </button>
+        <button
+          className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+          disabled={selectedSeats.length === 0 || isPending}
+          onClick={handleBooking}
+        >
+          {isPending ? 'Đang đặt vé...' : 'Đặt vé'}
+        </button>
         </div>
       </div>
     </div>
